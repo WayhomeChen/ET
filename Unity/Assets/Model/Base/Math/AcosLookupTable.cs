@@ -1,5 +1,8 @@
 ﻿using System;
 
+/// <summary>
+/// arccos函数快表类
+/// </summary>
 public static class AcosLookupTable
 {
 	public static readonly int COUNT;

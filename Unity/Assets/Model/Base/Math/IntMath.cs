@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// 整型分式数学运算类
+/// </summary>
 public class IntMath
 {
 	public static VFactor atan2(int y, int x)

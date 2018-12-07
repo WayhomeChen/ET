@@ -1,21 +1,30 @@
 ﻿using System;
 
+/// <summary>
+/// 整型分式结构
+/// </summary>
 [Serializable]
 public struct VFactor
 {
-	public long nom; //分子
+	/// <summary> 分子 </summary>
+	public long nom;
 
-	public long den; //分母
+	/// <summary> 分母 </summary>
+	public long den;
 
+	/// <summary> 0/1 </summary>
 	[NonSerialized]
 	public static VFactor zero = new VFactor(0L, 1L);
 
+	/// <summary> 1/1 </summary>
 	[NonSerialized]
 	public static VFactor one = new VFactor(1L, 1L);
 
+	/// <summary> π=3.1416 </summary>
 	[NonSerialized]
 	public static VFactor pi = new VFactor(31416L, 10000L);
 
+	/// <summary> 2π=6.2832 </summary>
 	[NonSerialized]
 	public static VFactor twoPi = new VFactor(62832L, 10000L);
 
@@ -31,6 +40,7 @@ public struct VFactor
 		}
 	}
 
+	/// <summary> 整型结果 </summary>
 	public int integer
 	{
 		get
@@ -39,6 +49,7 @@ public struct VFactor
 		}
 	}
 
+	/// <summary> 单精度浮点型结果 </summary>
 	public float single
 	{
 		get
@@ -48,6 +59,7 @@ public struct VFactor
 		}
 	}
 
+	/// <summary> 是正数？, true=正, false=负 </summary>
 	public bool IsPositive
 	{
 		get
@@ -63,6 +75,7 @@ public struct VFactor
 		}
 	}
 
+	/// <summary> 是负数？, true=负, false=正 </summary>
 	public bool IsNegative
 	{
 		get
@@ -78,6 +91,7 @@ public struct VFactor
 		}
 	}
 
+	/// <summary> 是零？, true=零, false=非零 </summary>
 	public bool IsZero
 	{
 		get
@@ -86,6 +100,7 @@ public struct VFactor
 		}
 	}
 
+	/// <summary> 取倒数 </summary>
 	public VFactor Inverse
 	{
 		get
@@ -94,12 +109,27 @@ public struct VFactor
 		}
 	}
 
+	/// <summary>
+	/// 创建整型分式<br/>
+	/// <para>
+	/// <param name="n">n: 分子</param>, 
+	/// <param name="d">d: 分母</param>
+	/// </para>
+	/// </summary>
 	public VFactor(long n, long d)
 	{
 		this.nom = n;
 		this.den = d;
 	}
 
+
+	/// <summary>
+	/// 判断完全相等, 即非空、同类型、等值。
+	/// <para>
+	/// <param name="obj">obj: 比较对象</param>
+	/// </para>
+	/// <returns>返回: true=完全相等, false=不完全等</returns>
+	/// </summary>
 	public override bool Equals(object obj)
 	{
 		return obj != null && base.GetType() == obj.GetType() && this == (VFactor)obj;
@@ -110,11 +140,18 @@ public struct VFactor
 		return base.GetHashCode();
 	}
 
+	/// <summary>
+	/// float型结果字符串
+	/// </summary>
+	/// <returns></returns>
 	public override string ToString()
 	{
 		return this.single.ToString();
 	}
 
+	/// <summary>
+	/// 不懂？？？
+	/// </summary>
 	public void strip()
 	{
 		while ((this.nom & VFactor.mask_) > VFactor.upper_ && (this.den & VFactor.mask_) > VFactor.upper_)
@@ -124,6 +161,7 @@ public struct VFactor
 		}
 	}
 
+	/// <summary> 数学上的小于 </summary>
 	public static bool operator <(VFactor a, VFactor b)
 	{
 		long num = a.nom * b.den;
@@ -132,6 +170,7 @@ public struct VFactor
 		return (!flag) ? (num < num2) : (num > num2);
 	}
 
+	/// <summary> 数学上的大于 </summary>
 	public static bool operator >(VFactor a, VFactor b)
 	{
 		long num = a.nom * b.den;
@@ -140,6 +179,7 @@ public struct VFactor
 		return (!flag) ? (num > num2) : (num < num2);
 	}
 
+	/// <summary> 数学上的小于等于 </summary>
 	public static bool operator <=(VFactor a, VFactor b)
 	{
 		long num = a.nom * b.den;
@@ -148,6 +188,7 @@ public struct VFactor
 		return (!flag) ? (num <= num2) : (num >= num2);
 	}
 
+	/// <summary> 数学上的大于等于 </summary>
 	public static bool operator >=(VFactor a, VFactor b)
 	{
 		long num = a.nom * b.den;
@@ -156,16 +197,19 @@ public struct VFactor
 		return (!flag) ? (num >= num2) : (num <= num2);
 	}
 
+	/// <summary> 数学上的等于（BUG: 0/0==任何数） </summary>
 	public static bool operator ==(VFactor a, VFactor b)
 	{
 		return a.nom * b.den == b.nom * a.den;
 	}
 
+	/// <summary> 数学上的不等于（BUG: 0/0==任何数） </summary>
 	public static bool operator !=(VFactor a, VFactor b)
 	{
 		return a.nom * b.den != b.nom * a.den;
 	}
 
+	/// <summary> 数学上的小于 </summary>
 	public static bool operator <(VFactor a, long b)
 	{
 		long num = a.nom;
@@ -173,6 +217,7 @@ public struct VFactor
 		return (a.den <= 0L) ? (num > num2) : (num < num2);
 	}
 
+	/// <summary> 数学上的大于 </summary>
 	public static bool operator >(VFactor a, long b)
 	{
 		long num = a.nom;
@@ -180,6 +225,7 @@ public struct VFactor
 		return (a.den <= 0L) ? (num < num2) : (num > num2);
 	}
 
+	/// <summary> 数学上的小于等于 </summary>
 	public static bool operator <=(VFactor a, long b)
 	{
 		long num = a.nom;
@@ -187,6 +233,7 @@ public struct VFactor
 		return (a.den <= 0L) ? (num >= num2) : (num <= num2);
 	}
 
+	/// <summary> 数学上的大于等于 </summary>
 	public static bool operator >=(VFactor a, long b)
 	{
 		long num = a.nom;
@@ -194,16 +241,19 @@ public struct VFactor
 		return (a.den <= 0L) ? (num <= num2) : (num >= num2);
 	}
 
+	/// <summary> 数学上的等于（BUG: 0/0==任何数） </summary>
 	public static bool operator ==(VFactor a, long b)
 	{
 		return a.nom == b * a.den;
 	}
 
+	/// <summary> 数学上的不等于（BUG: 0/0==任何数） </summary>
 	public static bool operator !=(VFactor a, long b)
 	{
 		return a.nom != b * a.den;
 	}
 
+	/// <summary> 数学上的加 </summary>
 	public static VFactor operator +(VFactor a, VFactor b)
 	{
 		return new VFactor
@@ -213,12 +263,14 @@ public struct VFactor
 		};
 	}
 
+	/// <summary> 数学上的加 </summary>
 	public static VFactor operator +(VFactor a, long b)
 	{
 		a.nom += b * a.den;
 		return a;
 	}
 
+	/// <summary> 数学上的减 </summary>
 	public static VFactor operator -(VFactor a, VFactor b)
 	{
 		return new VFactor
@@ -228,18 +280,21 @@ public struct VFactor
 		};
 	}
 
+	/// <summary> 数学上的减 </summary>
 	public static VFactor operator -(VFactor a, long b)
 	{
 		a.nom -= b * a.den;
 		return a;
 	}
 
+	/// <summary> 数学上的乘 </summary>
 	public static VFactor operator *(VFactor a, long b)
 	{
 		a.nom *= b;
 		return a;
 	}
 
+	/// <summary> 数学上的除 </summary>
 	public static VFactor operator /(VFactor a, long b)
 	{
 		a.den *= b;
@@ -271,6 +326,7 @@ public struct VFactor
 		return (int)IntMath.Divide((long)i * f.nom, f.den);
 	}
 
+	/// <summary> 取相反数 </summary>
 	public static VFactor operator -(VFactor a)
 	{
 		a.nom = -a.nom;
