@@ -1,5 +1,8 @@
 ﻿using System;
 
+/// <summary>
+/// sin cos 函数快表类
+/// </summary>
 public static class SinCosLookupTable
 {
 	public static readonly int BITS;

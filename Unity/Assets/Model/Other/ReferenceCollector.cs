@@ -7,13 +7,21 @@ using UnityEditor;
 
 #endif
 
+/// <summary>
+/// Unity游戏对象引用收集器数据
+/// </summary>
 [Serializable]
 public class ReferenceCollectorData
 {
+	/// <summary> 主键 </summary>
 	public string key;
+	/// <summary> Unity游戏对象 </summary>
 	public Object gameObject;
 }
 
+/// <summary>
+/// Unity游戏对象引用收集器比较器
+/// </summary>
 public class ReferenceCollectorDataComparer: IComparer<ReferenceCollectorData>
 {
 	public int Compare(ReferenceCollectorData x, ReferenceCollectorData y)
@@ -22,13 +30,23 @@ public class ReferenceCollectorDataComparer: IComparer<ReferenceCollectorData>
 	}
 }
 
-public class ReferenceCollector: MonoBehaviour, ISerializationCallbackReceiver
+/// <summary>
+/// Unity游戏对象引用收集器
+/// </summary>
+public class ReferenceCollector: MonoBehaviour, ISerializationCallbackReceiver // 一般地，存在Unity无法自动(反)序列化的字段的MonoBehaviour子类才需要继承ISerializationCallbackReceiver接口
 {
 	public List<ReferenceCollectorData> data = new List<ReferenceCollectorData>();
 
 	private readonly Dictionary<string, Object> dict = new Dictionary<string, Object>();
 
 #if UNITY_EDITOR
+	/// <summary>
+	/// 添加引用
+	/// <para>
+	/// <param name="key">key: 主键</param>,
+	/// <param name="obj">obj: Unity游戏对象</param>
+	/// </para>
+	/// </summary>
 	public void Add(string key, Object obj)
 	{
 		SerializedObject serializedObject = new SerializedObject(this);
@@ -58,6 +76,12 @@ public class ReferenceCollector: MonoBehaviour, ISerializationCallbackReceiver
 		serializedObject.UpdateIfRequiredOrScript();
 	}
 
+	/// <summary>
+	/// 移除引用
+	/// <para>
+	/// <param name="key">key: 主键</param>
+	/// </para>
+	/// </summary>
 	public void Remove(string key)
 	{
 		SerializedObject serializedObject = new SerializedObject(this);

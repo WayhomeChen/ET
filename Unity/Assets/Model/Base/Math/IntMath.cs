@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 整型分式数学运算类
+/// 整型数学运算类
 /// </summary>
 public class IntMath
 {
