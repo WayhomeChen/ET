@@ -2,8 +2,19 @@
 
 namespace ETModel
 {
+	/// <summary>
+	/// 组件工厂类
+	/// </summary>
 	public static class ComponentFactory
 	{
+		/// <summary>
+		/// 在已知父组件的情况下，创建组件
+		/// <para>
+		/// <param name="type">type: 所创组件类型</param>,
+		/// <param name="parent">parent: 所创组件的父组件</param>,
+		/// <returns>返回: 所创组件实例</returns>
+		/// </para>
+		/// </summary>
 		public static Component CreateWithParent(Type type, Component parent)
 		{
 			Component component = Game.ObjectPool.Fetch(type);
