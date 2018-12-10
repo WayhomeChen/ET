@@ -49,3 +49,13 @@ Server/.DS_Store
 /Server/.vscode/
 .objs/
 Unity/.gradle
+
+/Unity/Assets/Res/Code/Hotfix.dll.bytes
+/Unity/Assets/Res/Code/Hotfix.pdb.bytes
+/Unity/ProjectSettings/ProjectVersion.txt
+/Unity/Unity.Editor.csproj
+/Unity/Unity.Hotfix.csproj
+/Unity/Unity.Model.csproj
+/Unity/Unity.ThirdParty.csproj
+/Unity/Unity.csproj
+/Unity/Unity.sln
